@@ -16,14 +16,16 @@
         <li><a href="{{'/ec2'}}"> EC2 </a></li>
         <li><a href="{{'/vpc'}}"> VPC </a></li>
         <li><a href="{{'/rds'}}"> RDS </a></li>
+        <li><a href="{{'/customize'}}"> CUSTOMIZE </a></li>
         <li><a href="{{'/login'}}"> LOGIN </a></li>
-        <li><a href=""> FAQ </a></li>
+<!--        <li><a href=""> FAQ </a></li>-->
     </ul>
     </div>
     <div class="create-bucket">
       <form class="" action="/create_s3_bucket" method="POST">
         <h1>Create Bucket</h1>
-        <input type="text" name = "bucket_name" placeholder="Bucket Name" class="txtb">
+          <input type="text" name = "stack_name" placeholder="Cloud Formation Stack Name" class="txtb">
+          <input type="text" name = "bucket_name" placeholder="Bucket Name" class="txtb">
           <input type="text" name = "description" placeholder="Description" class="txtb">
         <!--<p class="select1">Select Your Region</p>
           <select name="region" class="txts">

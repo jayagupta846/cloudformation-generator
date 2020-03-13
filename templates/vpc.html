@@ -15,38 +15,40 @@
         <li><a href="{{'/ec2'}}"> EC2 </a></li>
         <li class="active"><a href=""> VPC </a></li>
         <li><a href="{{'/rds'}}"> RDS </a></li>
+        <li><a href="{{'/customize'}}"> CUSTOMIZE </a></li>
         <li><a href="{{'/login'}}"> LOGIN </a></li>
-        <li><a href=""> FAQ </a></li>
+<!--        <li><a href=""> FAQ </a></li>-->
     </ul>
     </div>
     <div class="create-bucket">
-      <form class="" action="rds.html" method="post">
+      <form class="" action="/create_vpc" method="post">
         <h1>Create VPC</h1>
+          <input type="text" name = "stack_name" placeholder="Cloud Formation Stack Name" class="txtb">
          <h3 class="select1">VPC</h3>
-        <input type="text" placeholder="Name" class="txtb">
-        <input type="text" placeholder="IPv4 CIDR block" class="txtb">
+        <input type="text" name = "vpc_name" placeholder="Name" class="txtb">
+        <input type="text" name = "vpc_cidr" placeholder="IPv4 CIDR block" class="txtb">
           <h3 class="select1">Subnet</h3>
-        <input type="text" placeholder="Name" class="txtb">
-          <input type="text" placeholder="IPv4 CIDR block" class="txtb">
-        <p class="select1">Virtual Private Cloud</p>
+        <input type="text" name="subnet_name" placeholder="Name" class="txtb">
+          <input type="text" name = "subnet_cidr" placeholder="IPv4 CIDR block" class="txtb">
+        <!--<p class="select1">Virtual Private Cloud</p>
           <select name="vpc" class="txts">
             <option value="Regions">vpc-c49e88a3</option>
             <option value="Regions">vpc-0cdcc22ad39b44f67</option>
-          </select>
+          </select>-->
           <h3 class="select1">Route Table</h3>
-        <input type="text" placeholder="Name" class="txtb">
-        <p class="select1">Virtual Private Cloud</p>
+        <input type="text" name = "route_name" placeholder="Name" class="txtb">
+        <!--<p class="select1">Virtual Private Cloud</p>
           <select name="vpc" class="txts">
             <option value="Regions">vpc-c49e88a3</option>
             <option value="Regions">vpc-0cdcc22ad39b44f67</option>
-          </select>
+          </select>-->
           <h3 class="select1">Internet Gateway</h3>
-        <input type="text" placeholder="Name" class="txtb">
-        <p class="select1">Virtual Private Cloud</p>
+        <input type="text" name = "igw_name" placeholder="Name" class="txtb">
+        <!--<p class="select1">Virtual Private Cloud</p>
           <select name="vpc" class="txts">
             <option value="Regions">vpc-c49e88a3</option>
             <option value="Regions">vpc-0cdcc22ad39b44f67</option>
-          </select>
+          </select>-->
         <input type="submit" value="Create Database" class="bucket-btn">
       </form>
     </div>

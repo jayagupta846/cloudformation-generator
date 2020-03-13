@@ -15,16 +15,18 @@
         <li class="active"><a href=""> EC2 </a></li>
         <li><a href="{{'/vpc'}}"> VPC </a></li>
         <li><a href="{{'/rds'}}"> RDS </a></li>
+        <li><a href="{{'/customize'}}"> CUSTOMIZE </a></li>
         <li><a href="{{'/login'}}"> LOGIN </a></li>
-        <li><a href=""> FAQ </a></li>
+<!--        <li><a href=""> FAQ </a></li>-->
     </ul>
     </div>
     <div class="create-bucket">
       <form class="" action="/ec2_instance" method="post">
         <h1>Launch Instance</h1>
-        <input type="text" name="instance_name" placeholder="Instance Name" class="txtb">
-        <p class="select1">Select Your Region</p>
-        <select name="region" class="txts">
+          <input type="text" name = "stack_name" placeholder="Cloud Formation Stack Name" class="txtb">
+          <input type="text" name="instance_name" placeholder="Instance Name" class="txtb">
+          <p class="select1">Select Your Region</p>
+          <select name="region" class="txts">
           <option value="ami-07ebfd5b3428b6f4d">US East (N. Virginia) us-east-1</option>
             <option value="ami-0fc20dd1da406780b">US East (Ohio) us-east-2</option>
             <option value="ami-03ba3948f6c37a4b0">US West (N. California) us-west-1</option>

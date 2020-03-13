@@ -3,6 +3,8 @@ from flask_sqlalchemy import SQLAlchemy
 import s3troposphere
 import ec2troposphere
 import vpctroposphere
+import rdstroposphere
+import customizetroposphere
 
 class Config(object):
     SECRET_KEY = '\xf5\xd4\x90sd\xed\xa8\xf6\x867B\n\xd0\xdcR\xb1'
@@ -71,6 +73,72 @@ class vpc_table(db.Model):
     def __repr__(self):
         return '<vpc_table %r>' % self.username
 
+class rds_table(db.Model):
+    sname = db.Column(db.String(50), primary_key=True)
+    name = db.Column(db.String(80))
+    username = db.Column(db.String(80))
+    password = db.Column(db.String(80))
+    storage = db.Column(db.String(80))
+    instance = db.Column(db.String(80))
+    vname = db.Column(db.String(80))
+
+    def __init__(self, sname, name, username, password, storage, instance, vname):
+        self.sname = sname
+        self.name = name
+        self.username = username
+        self.password = password
+        self.storage = storage
+        self.instance = instance
+        self.vname = vname
+
+    def __repr__(self):
+        return '<rds_table %r>' % self.username
+
+
+class login_table(db.Model):
+    access_id = db.Column(db.String(50), primary_key=True)
+    access_key = db.Column(db.String(80))
+    region = db.Column(db.String(50), nullable=False)
+
+    def __init__(self, access_id, access_key, region):
+        self.access_id = access_id
+        self.access_key = access_key
+        self.region = region
+
+    def __repr__(self):
+        return '<login_table %r>' % self.username
+
+class customize_table(db.Model):
+    sname = db.Column(db.String(50), primary_key=True)
+    instance1 = db.Column(db.String(80))
+    instancetype1 = db.Column(db.String(80))
+    instance2 = db.Column(db.String(80))
+    instancetype2 = db.Column(db.String(80))
+    dbname = db.Column(db.String(80))
+    dbuser = db.Column(db.String(80))
+    dbpassword = db.Column(db.String(80))
+    dbstorage = db.Column(db.String(80))
+    dbinstance = db.Column(db.String(80))
+    vpcname = db.Column(db.String(80))
+    subnetname = db.Column(db.String(80))
+
+    def __init__(self, sname, instance1, instancetype1, instance2, instancetype2, dbname, dbuser, dbpassword, dbstorage, dbinstance, vpcname, subnetname):
+        self.sname = sname
+        self.instance1 = instance1
+        self.instancetype1 = instancetype1
+        self.instance2 = instance2
+        self.instancetype2 = instancetype2
+        self.dbname = dbname
+        self.dbuser = dbuser
+        self.dbpassword = dbpassword
+        self.dbstorage = dbstorage
+        self.dbinstance = dbinstance
+        self.vpcname = vpcname
+        self.subnetname = subnetname
+
+    def __repr__(self):
+        return '<vpc_table %r>' % self.username
+
 
 @app.route('/')
 def index():
@@ -129,13 +197,53 @@ def ec2success():
 
 
 @app.route('/rds')
-def rds():
+def rds_render():
     return render_template('rds.html')
 
 
+@app.route('/rds_database', methods=['GET', 'POST'])
+def rds():
+    if request.method == 'POST':
+        if not request.form['stack_name'] or not request.form['db_name'] or not request.form['db_user'] or not request.form['password'] or not request.form['allocated_storage'] or not request.form['instance'] or not request.form['vpc']:
+            flash('Please enter all the fields', 'error')
+        else:
+            rdsdbs = rds_table(request.form['stack_name'], request.form['db_name'], request.form['db_user'], request.form['password'], request.form['allocated_storage'], request.form['instance'], request.form['vpc'])
+            db.session.add(rdsdbs)
+            db.session.commit()
+            flash('Record was successfully added')
+            rdstroposphere.create()
+            return redirect(url_for('rdssuccess'))
+    return render_template('rds.html')
+
+
+@app.route('/rdssuccess')
+def rdssuccess():
+    return render_template('rdssuccess.html')
+
+
 @app.route('/login')
-def login():
+def login_render():
     return render_template('login.html')
+
+
+@app.route('/login_access', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        if not request.form['id'] or not request.form['key'] or not request.form['region']:
+            flash('Please enter all the fields', 'error')
+        else:
+            logindbs = login_table(request.form['id'], request.form['key'], request.form['region'])
+            db.session.add(logindbs)
+            db.session.commit()
+            flash('Record was successfully added')
+            #s3troposphere.create()
+            return redirect(url_for('loginsuccess'))
+    return render_template('login.html')
+
+
+@app.route('/loginsuccess')
+def loginsuccess():
+    return render_template('loginsuccess.html')
 
 
 @app.route('/signup')
@@ -166,6 +274,31 @@ def vpc():
 @app.route('/vpcsuccess')
 def vpcsuccess():
     return render_template('vpcsuccess.html')
+
+
+@app.route('/customize')
+def customize_render():
+    return render_template('customize.html')
+
+
+@app.route('/custom_arch', methods=['GET', 'POST'])
+def customize():
+    if request.method == 'POST':
+        if not request.form['stack_name'] or not request.form['instance_name1'] or not request.form['instance_type1'] or not request.form['instance_name2'] or not request.form['instance_type2'] or not request.form['db_name'] or not request.form['db_user'] or not request.form['db_password'] or not request.form['allocated_storage'] or not request.form['db_instance'] or not request.form['vpc_name'] or not request.form['subnet_name']:
+            flash('Please enter all the fields', 'error')
+        else:
+            customizedbs = customize_table(request.form['stack_name'], request.form['instance_name1'], request.form['instance_type1'], request.form['instance_name2'], request.form['instance_type2'], request.form['db_name'], request.form['db_user'], request.form['db_password'], request.form['allocated_storage'], request.form['db_instance'], request.form['vpc_name'], request.form['subnet_name'])
+            db.session.add(customizedbs)
+            db.session.commit()
+            flash('Record was successfully added')
+            customizetroposphere.create()
+            return redirect(url_for('customizesuccess'))
+    return render_template('customize.html')
+
+
+@app.route('/customizesuccess')
+def customizesuccess():
+    return render_template('customizesuccess.html')
 
 
 if __name__ == "__main__":

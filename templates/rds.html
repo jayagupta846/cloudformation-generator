@@ -15,18 +15,21 @@
         <li><a href="{{'/ec2'}}"> EC2 </a></li>
         <li><a href="{{'/vpc'}}"> VPC </a></li>
         <li class="active"><a href=""> RDS </a></li>
+        <li><a href="{{'/customize'}}"> CUSTOMIZE </a></li>
         <li><a href="{{'/login'}}"> LOGIN </a></li>
-        <li><a href=""> FAQ </a></li>
+<!--        <li><a href=""> FAQ </a></li>-->
     </ul>
     </div>
     <div class="create-bucket">
-      <form class="" action="rds.html" method="post">
+      <form class="" action="/rds_database" method="post">
         <h1>Create Database</h1>
-        <input type="text" placeholder="Database Name" class="txtb">
-        <input type="password" placeholder="Create Password" class="txtb">
-        <input type="password" placeholder="Retype Password" class="txtb">
+        <input type="text" name = "stack_name" placeholder="Cloud Formation Stack Name" class="txtb">
+        <input type="text" name="db_name" placeholder="Database Name" class="txtb">
+        <input type="text" name="db_user" placeholder="Database User Name" class="txtb">
+        <input type="password" name="password" placeholder="Create Password" class="txtb">
+        <input type="text" name="allocated_storage" placeholder="Allocated Storage" class="txtb">
         <p class="select1">Select Your DB Instance Class</p>
-          <select name="Region" class="txts">
+          <select name="instance" class="txts">
             <option value="db.m4.large">db.m4.large (Standard Class)</option>
             <option value="db.m4.xlarge">db.m4.xlarge (Standard Class)</option>
             <option value="db.m4.2xlarge">db.m4.2xlarge (Standard Class)</option>
@@ -43,24 +46,24 @@
             <option value="db.r5.xlarge">db.r5.xlarge (Memory Optimized Class)</option>
             <option value="db.r5.2xlarge">db.r5.2xlarge (Memory Optimized Class)</option>
             <option value="db.r5.4xlarge">db.r5.4xlarge (Memory Optimized Class)</option>
-            <option value="Regions">db.t2.micro (Burstable Class)</option>
-            <option value="Regions">db.t2.small (Burstable Class)</option>
-            <option value="Regions">db.t2.medium (Burstable Class)</option>
-            <option value="Regions">db.t2.large (Burstable Class)</option>
-            <option value="Regions">db.t2.xlarge (Burstable Class)</option>
-            <option value="Regions">db.t2.2xlarge (Burstable Class)</option>
-            <option value="Regions">db.t3.micro (Burstable Class)</option>
-            <option value="Regions">db.t3.small (Burstable Class)</option>
-            <option value="Regions">db.t3.medium (Burstable Class)</option>
-            <option value="Regions">db.t3.large (Burstable Class)</option>
-            <option value="Regions">db.t3.xlarge (Burstable Class)</option>
-            <option value="Regions">db.t3.2xlarge (Burstable Class)</option>
+            <option value="db.t2.micro">db.t2.micro (Burstable Class)</option>
+            <option value="db.t2.small">db.t2.small (Burstable Class)</option>
+            <option value="db.t2.medium">db.t2.medium (Burstable Class)</option>
+            <option value="db.t2.large">db.t2.large (Burstable Class)</option>
+            <option value="db.t2.xlarge">db.t2.xlarge (Burstable Class)</option>
+            <option value="db.t2.2xlarge">db.t2.2xlarge (Burstable Class)</option>
+            <option value="db.t3.micro">db.t3.micro (Burstable Class)</option>
+            <option value="db.t3.small">db.t3.small (Burstable Class)</option>
+            <option value="db.t3.medium">db.t3.medium (Burstable Class)</option>
+            <option value="db.t3.large">db.t3.large (Burstable Class)</option>
+            <option value="db.t3.xlarge">db.t3.xlarge (Burstable Class)</option>
+            <option value="db.t3.2xlarge">db.t3.2xlarge (Burstable Class)</option>
           </select>
         <p class="select1">Virtual Private Cloud</p>
           <select name="vpc" class="txts">
             option value="new">Create New VPC</option>
-            <option value="vpc-c49e88a3">vpc-c49e88a3 (Existing)</option>
-            <option value="vpc-0cdcc22ad39b44f67">vpc-0cdcc22ad39b44f67 (Existing)</option>
+            <option value="vpc-0cdcc22ad39b44f67">vpc-0cdcc22ad39b44f67</option>
+            <option value="vpc-c49e88a3">vpc-c49e88a3</option>
           </select>
         <input type="submit" value="Create Database" class="bucket-btn">
       </form>
